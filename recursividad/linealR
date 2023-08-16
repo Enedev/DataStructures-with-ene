@@ -1,0 +1,13 @@
+import random
+random.seed(0)
+s = random.sample(list(range(10000)),500) #Lista generada aleatoriamente, 500 datos
+sum_s = sum(s[:5]) #Caso de prueba ---> suma de los elementos a través de función propia de python
+#Revisar operador slice en listas
+def linear_sum(s, n):
+  if(len(s)==0):
+    return 0
+  else:
+    return s[n-1] + linear_sum(s[:n-1], n-1)
+
+assert sum_s == linear_sum(s,5), "Error" #Evaluación de caso de prueba
+print(linear_sum(s,5))
