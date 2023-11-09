@@ -20,7 +20,25 @@ class Node:
         if self.down:
             self.down.up = self.upe
 
+class Directions:
+    def __init__(self):
+        self.head = None
 
+    def add_direction(self, value):
+        new_node = Node(value)
+        new_node.next = self.head
+        self.head = new_node
+
+    def get_directions(self):
+        current = self.head
+        directions_list = []
+
+        while current:
+            directions_list.append(current.value)
+            current = current.next
+
+        return directions_list
+    
 class MatrixLinkedList:
     def __init__(self, n):
         self.n = n
@@ -201,7 +219,11 @@ class MatrixLinkedList:
             if (player == 'X' and row == self.n - 1) or (player == 'Y' and row == 0):
                 return True
 
-            directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
+            directions = Directions()
+            directions.add_direction((0, 1))
+            directions.add_direction((1, 0))
+            directions.add_direction((0, -1))
+            directions.add_direction((-1, 0))
 
             for dr, dc in directions:
                 new_row, new_col = row + dr, col + dc
