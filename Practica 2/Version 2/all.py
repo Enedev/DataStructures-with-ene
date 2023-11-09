@@ -197,7 +197,7 @@ class MatrixLinkedList:
     def can_reach_victory(self, player):
         def dfs(row, col):
             visited[row][col] = True
-
+    
             if (player == 'X' and row == self.n - 1) or (player == 'Y' and row == 0):
                 return True
 
