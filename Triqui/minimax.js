@@ -13,8 +13,8 @@ function bestMove() {
         // Is the spot available?
         if (board[i][j] == '') {
           board[i][j] = ai;
-          debugger
-          let score = minimax(board, false, -Infinity, Infinity);
+          
+          let score = minimax(board, 8, false, -Infinity, Infinity);
           board[i][j] = '';
           if (score > bestScore) {
             bestScore = score;
@@ -29,15 +29,19 @@ function bestMove() {
   }
   
   let scores = {
-    X: 1,
-    O: -1,
-    tie: 0
+    'X': 1,
+    'O': -1,
+    'tie': 0
   };
 
-  function minimax(board, isMaximizing, alpha, beta) {
-    debugger
+  function minimax(board, depth,  isMaximizing, alpha, beta) {
+    
     let result = checkWinner(board);
     if (result !== null) {
+      return result === ai ? 1 : result === human ? -1 : 0;
+    }
+
+    if(depth === 0) {
       return result === ai ? 1 : result === human ? -1 : 0;
     }
     
@@ -49,10 +53,10 @@ function bestMove() {
                 // Is the spot available?
                 if (board[i][j] == '') {
                     board[i][j] = ai;
-                    let score = minimax(board, false, alpha, beta);
+                    let score = minimax(board, depth -1, false, alpha, beta);
                     board[i][j] = '';
                     bestScore = Math.max(bestScore, score);
-                    alpha = max(alpha, bestScore);
+                    alpha = Math.max(alpha, bestScore);
                     if (beta <= alpha) {
                         break; // Beta cutoff
                     }
@@ -67,11 +71,11 @@ function bestMove() {
                 // Is the spot available?
                 if (board[i][j] == '') {
                     board[i][j] = human;
-                    let score = minimax(board, true, alpha, beta);
+                    let score = minimax(board, depth -1, true, alpha, beta);
                     board[i][j] = '';
                     bestScore = Math.min(bestScore, score);
 
-                    beta = min(beta, bestScore);
+                    beta = Math.min(beta, bestScore);
                     if (beta <= alpha) {
                         break; // Alpha cutoff
                     }
